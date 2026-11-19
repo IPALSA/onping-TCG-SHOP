@@ -155,7 +155,10 @@
     try { isAdmin = (await db.collection('admins').doc(u.uid).get()).exists; } catch (e) {}
     await loadCat();
     const s = await uref.get();
-    if (!s.exists) { toast('계정 정보를 찾을 수 없어요. 다시 로그인해주세요'); auth.signOut(); return; }
+    const claimNick = ((await u.getIdTokenResult()).claims.nick) || '';
+    if (!claimNick) { toast('로그인 정보가 올바르지 않아요. 다시 로그인해주세요'); auth.signOut(); return; }
+    if (!s.exists) await uref.set({ gold: 100, col: {}, nick: claimNick, nickTs: 0, photo: '' });
+    else if (s.data().nick !== claimNick) await uref.update({ nick: claimNick });   // 치지직 최신 닉네임으로 갱신
     unsubs.push(uref.onSnapshot(sn => {
       const d = sn.data(); if (!d) return;
       gold = d.gold != null ? d.gold : 0; $('gold').textContent = gold.toLocaleString(); col = d.col || {};
