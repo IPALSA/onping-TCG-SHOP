@@ -14,5 +14,5 @@ window.CHZZK = {
   // 치지직 앱의 '로그인 리디렉션 URL'과 글자 하나까지 똑같아야 합니다 (사이트 주소)
   redirectUri: "https://ipalsa.github.io/onping-TCG-SHOP/",
   // 배포한 Cloud Function 주소
-  loginFn: "https://asia-northeast3-YOUR_PROJECT.cloudfunctions.net/chzzkLogin"
+  loginFn: "https://chzzk-login.jaehyeon0284.workers.dev/"
 };
